@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>node.js chat</title>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script type="text/javascript">
+  //  var s = io.connect(); //リモート
+  var s = io.connect('http://localhost:3000'); //ローカル
+    //var s = io.connect('http://192.168.33.40:3000'); // 自分の作成した環境へ接続
+  //サーバから受け取るイベント
+  s.on("connect", function () {});  // 接続時
+  s.on("disconnect", function (client) {});  // 切断時
+  s.on("S_to_C_message", function (data) {
+    addMessage(data.value);
+  });
+  if (Object.keys(get_url_vars()).indexOf("") == 0) {
+    sendMessage("test")
+  }else{
+    console.log(get_url_vars())
+    sendMessage(get_url_vars())
+  }
+
+  //クライアントからイベント送信（イベント名は自由に設定できます）
+  function sendMessage(msg) {
+    s.emit("C_to_S_message", {value:msg}); //サーバへ送信
+  }
+
+  function sendBroadcast() {
+    var msg = $("#message").val(); //取得
+    $("#message").val(""); //空白にする
+    s.emit("C_to_S_broadcast", {value:msg}); // サーバへ送信
+  }
+
+  //jqueryでメッセージを追加
+  function addMessage (value,color,size) {
+    var msg = value.replace( /[!@$%<>'"&|]/g, '' ); //タグ記号とかいくつか削除
+    $("#msg_list").prepend("<div class='msg'>" + msg + "</div>");
+  }
+  function get_url_vars()
+  {
+    var vars = new Object, params;
+    var temp_params = window.location.search.substring(1).split('&');
+    for(var i = 0; i <temp_params.length; i++) {
+      params = temp_params[i].split('=');
+      vars[params[0]] = params[1];
+    }
+    return vars;
+  }
+  </script>
+  <style>
+    *{
+      font-size:30px;
+      margin:0;
+      padding:0;
+    }
+  </style>
+</head>
+<body>
+</div>
+</body>
+</html>

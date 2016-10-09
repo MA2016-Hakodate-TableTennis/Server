@@ -1,0 +1,17 @@
+{
+  "name": "MA2016server",
+  "version": "0.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "socket.io": "~1.5.0",
+    "express": "~4.14.0",
+    "body-parser": "~1.15.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
