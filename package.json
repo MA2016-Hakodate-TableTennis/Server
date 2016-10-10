@@ -4,6 +4,7 @@
   "description": "",
   "main": "app.js",
   "dependencies": {
+    "http": "*",
     "socket.io": "~1.5.0",
     "express": "~4.14.0",
     "body-parser": "~1.15.2"
